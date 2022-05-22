@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    uses: KronbergerSpiele/ks-godot-ci/.github/workflows/build.yml@master
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    uses: KronbergerSpiele/ks-godot-ci/.github/workflows/deploy.yml@master

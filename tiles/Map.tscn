@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://tiles/Map.gd" type="Script" id=1]
+[ext_resource path="res://tiles/enemy/Enemy.tres" type="TileSet" id=2]
+
+[node name="Map" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 32, 32 )
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+show_collision = true
+centered_textures = true
+format = 1
+script = ExtResource( 1 )

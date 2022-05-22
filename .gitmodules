@@ -1,0 +1,4 @@
+[submodule "jsgdbridge"]
+	path = jsgdbridge
+	url = git@github.com:KronbergerSpiele/jsgdbridge.git
+	branch = master

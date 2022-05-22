@@ -1,0 +1,188 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://camera.gd" type="Script" id=2]
+[ext_resource path="res://tiles/Start.tscn" type="PackedScene" id=3]
+[ext_resource path="res://puller.gd" type="Script" id=4]
+[ext_resource path="res://game.gd" type="Script" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[sub_resource type="Animation" id=2]
+resource_name = "Start"
+tracks/0/type = "value"
+tracks/0/path = NodePath("UI/score:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Intro/Click:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Intro/Explain:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="score" type="Label" parent="UI"]
+margin_left = 419.0
+margin_top = 12.0
+margin_right = 459.0
+margin_bottom = 36.0
+text = "0"
+align = 2
+
+[node name="camera" type="Camera2D" parent="."]
+position = Vector2( 225, 160 )
+current = true
+script = ExtResource( 2 )
+
+[node name="puller" type="StaticBody2D" parent="."]
+position = Vector2( 25, 160 )
+script = ExtResource( 4 )
+speed = 75.0
+speedFactor = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="puller"]
+shape = SubResource( 1 )
+disabled = true
+
+[node name="GrooveJoint2D" type="GrooveJoint2D" parent="puller"]
+position = Vector2( 0, -140 )
+node_a = NodePath("..")
+node_b = NodePath("../../player")
+length = 280.0
+initial_offset = 140.0
+
+[node name="DampedSpringJoint2D" type="DampedSpringJoint2D" parent="puller"]
+position = Vector2( 0, 1 )
+node_a = NodePath("..")
+node_b = NodePath("../../player")
+length = 1.0
+stiffness = 50.0
+damping = 4.0
+
+[node name="Intro" type="Node2D" parent="."]
+z_index = 1
+
+[node name="Click" type="Node2D" parent="Intro"]
+
+[node name="clickToBegin" type="Label" parent="Intro/Click"]
+margin_left = 114.0
+margin_top = 90.0
+margin_right = 326.0
+margin_bottom = 114.0
+text = "CLICK TO BEGIN"
+
+[node name="Explain" type="Node2D" parent="Intro"]
+
+[node name="Label" type="Label" parent="Intro/Explain"]
+margin_left = 77.0
+margin_top = 197.0
+margin_right = 348.0
+margin_bottom = 248.0
+text = "WelCOME ADVENTURER
+Avoid THE DWELLERS"
+
+[node name="Label2" type="Label" parent="Intro/Explain"]
+margin_left = 371.0
+margin_top = 109.0
+margin_right = 592.0
+margin_bottom = 133.0
+text = "PRESS UP_ARROW"
+
+[node name="Label3" type="Label" parent="Intro/Explain"]
+margin_left = 375.0
+margin_top = 177.0
+margin_right = 583.0
+margin_bottom = 201.0
+text = "OR DOWN_ARROW"
+
+[node name="Label4" type="Label" parent="Intro/Explain"]
+margin_left = 422.0
+margin_top = 142.0
+margin_right = 545.0
+margin_bottom = 166.0
+text = "TO NUDGE"
+
+[node name="Label5" type="Label" parent="Intro/Explain"]
+margin_left = 587.0
+margin_top = 44.0
+margin_right = 784.0
+margin_bottom = 68.0
+text = "OR CLICK HERE"
+
+[node name="Label6" type="Label" parent="Intro/Explain"]
+margin_left = 579.0
+margin_top = 244.0
+margin_right = 776.0
+margin_bottom = 268.0
+text = "OR CLICK HERE"
+
+[node name="pieces" type="Node2D" parent="."]
+
+[node name="Start" parent="pieces" instance=ExtResource( 3 )]
+
+[node name="player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 25, 160 )
+z_index = 100
+z_as_relative = false
+angular_damp = 10000.0
+push = 1001
+
+[node name="footsteps" type="Node2D" parent="."]
+position = Vector2( 25, 160 )
+
+[node name="emitter" type="CPUParticles2D" parent="footsteps"]
+position = Vector2( -6, 17 )
+amount = 25
+explosiveness = 0.04
+randomness = 0.1
+lifetime_randomness = 0.05
+local_coords = false
+emission_shape = 3
+emission_points = PoolVector2Array(  )
+emission_colors = PoolColorArray(  )
+spread = 105.97
+gravity = Vector2( -100, 0 )
+orbit_velocity_random = 0.2
+linear_accel = 1.0
+radial_accel = 1.0
+tangential_accel = 47.61
+tangential_accel_random = 1.0
+scale_amount = 5.0
+scale_amount_random = 1.0
+color = Color( 0.85098, 0.0784314, 0.0784314, 0.639216 )
+hue_variation = 0.09
+hue_variation_random = 0.04
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Start = SubResource( 2 )
