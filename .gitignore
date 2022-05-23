@@ -1,6 +1,7 @@
 # Godot-specific ignores
 .import/
-docs/
+docs/*
 !docs/index.html
+!docs/impressum.html
 .DS_Store
 

@@ -54,7 +54,7 @@ func _input(event):
     player.pushUp() if up else player.pushDown()
 
 
-func _process(delta):
+func _process(_delta):
   footsteps.position = player.position
   if player.position.x + LOOKAHEAD > generatedFor:
     appendPiece()
