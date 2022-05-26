@@ -14,7 +14,6 @@ onready var startPiece = $pieces/Start
 onready var animations = $AnimationPlayer
 onready var footsteps: Node2D = $footsteps
 
-
 #start is 20 blocks long
 var generatedFor = PIECE_SIZE * 2 
 
@@ -22,6 +21,7 @@ var score = 0 setget setScore, getScore
 var hasStarted = false
 
 func _ready():
+  loadPieces()
   scoreLabel.modulate = Color(1, 1, 1, 0)
   introClick.modulate = Color(1, 1, 1, 1)
   introExplain.modulate = Color(1, 1, 1, 0)
@@ -58,15 +58,34 @@ func _process(_delta):
   footsteps.position = player.position
   if player.position.x + LOOKAHEAD > generatedFor:
     appendPiece()
-  
-const TEMPLATES = [
-  preload("res://pieces/KoboldRun.tscn")
-]  
+
+
+var TEMPLATES = []
+
+func listFilesInDirectory(path):
+    var files = []
+    var dir = Directory.new()
+    dir.open(path)
+    dir.list_dir_begin()
+
+    while true:
+        var file = dir.get_next()
+        if file == "":
+            break
+        elif not file.begins_with("."):
+            files.append(path+file)
+
+    dir.list_dir_end()
+
+    return files
     
+func loadPieces():
+  TEMPLATES = listFilesInDirectory("res://pieces/")
+
 func appendPiece():
   var rand:int = randi() % TEMPLATES.size()
   var template = TEMPLATES[rand]
-  var piece = template.instance()
+  var piece = load(template).instance()
   piece.position.x = generatedFor
   generatedFor += PIECE_SIZE
   pieces.add_child(piece)
