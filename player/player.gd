@@ -22,6 +22,9 @@ func onBodyEntered(body):
   if map.powersUp:
     map.queue_free()
     Events.emit_signal("powerUp")
+  if map.treasure:
+    map.queue_free()
+    Events.emit_signal("treasure")
 
 var triggeredDeath = false
 func death():

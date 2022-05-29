@@ -28,6 +28,7 @@ func js() -> JSGDAbstractClient:
 func _ready():
   Events.connect("death", self, "onDeath")
   Events.connect("end", self, "onEnd")
+  Events.connect("treasure", self, "onTreasure")
 
   loadPieces()
   if global.isFirstStart:
@@ -115,3 +116,5 @@ func onEnd():
   js().reportScore(int(score))
   get_tree().reload_current_scene()
 
+func onTreasure():
+  score += 100

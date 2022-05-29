@@ -26,7 +26,7 @@ func onDeath():
   self.queue_free()
 
 func onPowerUp(): 
-  pass
+  $AnimationPlayer.play("PowerUp")
   
 func onQuickStart(): 
   print('qs')
