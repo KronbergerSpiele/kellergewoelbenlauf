@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://game.gd"
 }, {
 "base": "Node",
+"class": "GlobalManager",
+"language": "GDScript",
+"path": "res://GlobalManager.gd"
+}, {
+"base": "Node",
 "class": "JSGDAbstractClient",
 "language": "GDScript",
 "path": "res://jsgdbridge/gd/JSGDAbstractClient.gd"
@@ -41,6 +46,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Game": "",
+"GlobalManager": "",
 "JSGDAbstractClient": "",
 "JSGDAbstractClientManager": "",
 "JSGDClient": "",
@@ -57,6 +63,7 @@ config/icon="res://icon.png"
 [autoload]
 
 JSGDClientManager="*res://jsgdbridge/gd/JSGDClientManager.gd"
+Global="*res://GlobalManager.gd"
 
 [display]
 

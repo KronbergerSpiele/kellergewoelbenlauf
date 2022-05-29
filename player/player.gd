@@ -1,7 +1,7 @@
 extends RigidBody2D
 class_name Player
 
-export var push: int = 1000
+export var push: int = 800
 
 onready var game = $"/root/Game"
 

@@ -13,15 +13,27 @@ onready var pieces = $pieces
 onready var startPiece = $pieces/Start
 onready var animations = $AnimationPlayer
 onready var footsteps: Node2D = $footsteps
+onready var global: GlobalManager = $"/root/Global"
+
 
 #start is 20 blocks long
-var generatedFor = PIECE_SIZE * 2 
+var generatedFor = PIECE_SIZE
 
 var score = 0 setget setScore, getScore
 var hasStarted = false
+var shouldQuickStart = false
 
 func _ready():
   loadPieces()
+  if global.isFirstStart:
+    global.isFirstStart = false
+    $pieces/Start.queue_free()
+    generatedFor = PIECE_SIZE * 2
+  else:
+    shouldQuickStart = true
+    $pieces/FirstStart.queue_free()
+    introExplain.hide()
+  
   scoreLabel.modulate = Color(1, 1, 1, 0)
   introClick.modulate = Color(1, 1, 1, 1)
   introExplain.modulate = Color(1, 1, 1, 0)
@@ -40,7 +52,10 @@ func triggerStart():
   if hasStarted:
     return
   hasStarted = true
-  animations.play("Start")
+  
+  $Intro/AnimationPlayer.play("Start")
+  if shouldQuickStart:
+    $puller/AnimationPlayer.play("QuickStart")
 
 func _input(event):
   if !hasStarted && (event.is_action_pressed("pushMouse") || event.is_action_pressed("pushUp") || event.is_action_pressed("pushDown")):
@@ -58,7 +73,6 @@ func _process(_delta):
   footsteps.position = player.position
   if player.position.x + LOOKAHEAD > generatedFor:
     appendPiece()
-
 
 var TEMPLATES = []
 
