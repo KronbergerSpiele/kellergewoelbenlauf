@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "EventsManager",
+"language": "GDScript",
+"path": "res://EventsManager.gd"
+}, {
 "base": "Node2D",
 "class": "Game",
 "language": "GDScript",
@@ -45,6 +50,7 @@ _global_script_classes=[ {
 "path": "res://player/player.gd"
 } ]
 _global_script_class_icons={
+"EventsManager": "",
 "Game": "",
 "GlobalManager": "",
 "JSGDAbstractClient": "",
@@ -64,6 +70,7 @@ config/icon="res://icon.png"
 
 JSGDClientManager="*res://jsgdbridge/gd/JSGDClientManager.gd"
 Global="*res://GlobalManager.gd"
+Events="*res://EventsManager.gd"
 
 [display]
 

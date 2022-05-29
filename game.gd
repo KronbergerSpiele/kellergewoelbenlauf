@@ -26,6 +26,9 @@ func js() -> JSGDAbstractClient:
   return $"/root/JSGDClientManager".client 
 
 func _ready():
+  Events.connect("death", self, "onDeath")
+  Events.connect("end", self, "onEnd")
+
   loadPieces()
   if global.isFirstStart:
     global.isFirstStart = false
@@ -57,19 +60,18 @@ func triggerStart():
   
   $Intro/AnimationPlayer.play("Start")
   if shouldQuickStart:
-    $puller/AnimationPlayer.play("QuickStart")
+    Events.emit_signal("quickStart")
 
 func _input(event):
   if !hasStarted && (event.is_action_pressed("pushMouse") || event.is_action_pressed("pushUp") || event.is_action_pressed("pushDown")):
     triggerStart()  
   elif event.is_action_pressed("pushUp"):
-    player.pushUp()
+    Events.emit_signal("pushUp")
   elif event.is_action_pressed("pushDown"):
-    player.pushDown()
+    Events.emit_signal("pushDown")
   elif event.is_action_pressed("pushMouse"):
     var up = (event.position.y/get_viewport_rect().size.y) < 0.5
-    player.pushUp() if up else player.pushDown()
-
+    Events.emit_signal("pushUp") if up else Events.emit_signal("pushDown")
 
 func _process(_delta):
   footsteps.position = player.position
@@ -106,23 +108,10 @@ func appendPiece():
   generatedFor += PIECE_SIZE
   pieces.add_child(piece)
   
-var triggeredEnd = false  
-func end():
-  if triggeredEnd:
-    return
-  triggeredEnd = true
-  
-  if $puller:
-    $puller.queue_free() 
-  player.mass=65535
-  player.contact_monitor=false
-  player.linear_velocity=Vector2(0,0)
+func onDeath():
   $footsteps/emitter.emitting = false
   
-  var playerAnimation = $player/AnimationPlayer
-  playerAnimation.play('Death')
-  yield(playerAnimation, "animation_finished")
-  
+func onEnd():  
   js().reportScore(int(score))
   get_tree().reload_current_scene()
 
