@@ -15,13 +15,15 @@ onready var animations = $AnimationPlayer
 onready var footsteps: Node2D = $footsteps
 onready var global: GlobalManager = $"/root/Global"
 
-
 #start is 20 blocks long
 var generatedFor = PIECE_SIZE
 
 var score = 0 setget setScore, getScore
 var hasStarted = false
 var shouldQuickStart = false
+
+func js() -> JSGDAbstractClient:
+  return $"/root/JSGDClientManager".client 
 
 func _ready():
   loadPieces()
@@ -104,9 +106,23 @@ func appendPiece():
   generatedFor += PIECE_SIZE
   pieces.add_child(piece)
   
+var triggeredEnd = false  
 func end():
+  if triggeredEnd:
+    return
+  triggeredEnd = true
+  
+  if $puller:
+    $puller.queue_free() 
+  player.mass=65535
+  player.contact_monitor=false
+  player.linear_velocity=Vector2(0,0)
+  $footsteps/emitter.emitting = false
+  
+  var playerAnimation = $player/AnimationPlayer
+  playerAnimation.play('Death')
+  yield(playerAnimation, "animation_finished")
+  
   js().reportScore(int(score))
   get_tree().reload_current_scene()
 
-func js() -> JSGDAbstractClient:
-  return $"/root/JSGDClientManager".client 

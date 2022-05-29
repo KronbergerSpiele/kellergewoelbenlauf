@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://player/raw/base/human_male.png" type="Texture" id=1]
 [ext_resource path="res://player/player.gd" type="Script" id=2]
@@ -11,6 +11,22 @@
 [ext_resource path="res://player/raw/legs/pants_black.png" type="Texture" id=9]
 [ext_resource path="res://player/raw/felids/cat_8.png" type="Texture" id=10]
 [ext_resource path="res://player/raw/body/jacket_stud.png" type="Texture" id=11]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 0.466516 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ) ]
+}
 
 [node name="Player" type="RigidBody2D"]
 mode = 2
@@ -58,5 +74,8 @@ texture = ExtResource( 7 )
 
 [node name="HandRight" type="Sprite" parent="Things"]
 texture = ExtResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Death = SubResource( 1 )
 
 [connection signal="body_entered" from="." to="." method="onBodyEntered"]

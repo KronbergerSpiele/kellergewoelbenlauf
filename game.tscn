@@ -175,8 +175,7 @@ hue_variation_random = 0.04
 position = Vector2( 25, 160 )
 z_index = 100
 z_as_relative = false
-angular_damp = 10000.0
-applied_force = Vector2( 1000, 0 )
+gravity_scale = 0.0
 
 [node name="camera" type="Camera2D" parent="."]
 position = Vector2( 225, 160 )
