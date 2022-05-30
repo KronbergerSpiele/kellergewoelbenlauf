@@ -62,7 +62,7 @@ func _input(event):
     Events.emit_signal("pushDown")
   elif event.is_action_pressed("pushMouse"):
     var up = (event.position.y/get_viewport_rect().size.y) < 0.5
-    Events.emit_signal("pushUp") if up else Events.emit_signal("pushDown")
+    Events.emit_signal("pushUp" if up else "pushDown")
 
 func _process(_delta):
   $Footsteps.position = $Player.position

@@ -33,7 +33,7 @@ func death():
   triggeredDeath = true
 
   mass = 65535
-  contact_monitor=false
+  call_deferred("set_contact_monitor", false)
   linear_velocity=Vector2(0,0)
   Events.emit_signal("death")
   
