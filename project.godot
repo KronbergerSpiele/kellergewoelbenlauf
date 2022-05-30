@@ -25,19 +25,9 @@ _global_script_classes=[ {
 "path": "res://GlobalManager.gd"
 }, {
 "base": "Node",
-"class": "JSGDAbstractClient",
+"class": "JSGDManager",
 "language": "GDScript",
-"path": "res://jsgdbridge/gd/JSGDAbstractClient.gd"
-}, {
-"base": "Node",
-"class": "JSGDAbstractClientManager",
-"language": "GDScript",
-"path": "res://jsgdbridge/gd/JSGDAbstractClientManager.gd"
-}, {
-"base": "JSGDAbstractClient",
-"class": "JSGDClient",
-"language": "GDScript",
-"path": "res://jsgdbridge/gd/JSGDClient.gd"
+"path": "res://jsgdbridge/gd/JSGDManager.gd"
 }, {
 "base": "TileMap",
 "class": "Map",
@@ -58,9 +48,7 @@ _global_script_class_icons={
 "EventsManager": "",
 "Game": "",
 "GlobalManager": "",
-"JSGDAbstractClient": "",
-"JSGDAbstractClientManager": "",
-"JSGDClient": "",
+"JSGDManager": "",
 "Map": "",
 "Player": "",
 "UtilManager": ""
@@ -74,10 +62,10 @@ config/icon="res://icon.png"
 
 [autoload]
 
-JSGDClientManager="*res://jsgdbridge/gd/JSGDClientManager.gd"
-Global="*res://GlobalManager.gd"
-Events="*res://EventsManager.gd"
+JSGD="*res://jsgdbridge/gd/JSGDManager.gd"
 Util="*res://UtilManager.gd"
+Events="*res://EventsManager.gd"
+Global="*res://GlobalManager.gd"
 
 [display]
 

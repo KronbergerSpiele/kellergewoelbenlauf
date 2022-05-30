@@ -11,9 +11,6 @@ var score = 0.0 setget setScore, getScore
 var hasStarted = false
 var shouldQuickStart = false
 
-func js() -> JSGDAbstractClient:
-  return JSGDClientManager.client 
-
 func _ready():
   Events.connect("death", self, "onDeath")
   Events.connect("end", self, "onEnd")
@@ -28,13 +25,18 @@ func _ready():
     shouldQuickStart = true
     $Pieces/FirstStart.queue_free()
     $Intro/Explain.hide()
+    $AnimationPlayer.play("FadeIn")
+    modulate = Color(0, 0, 0, 1)
   
   $UI/Score.modulate = Color(1, 1, 1, 0)
   $Intro/Click.modulate = Color(1, 1, 1, 1)
   $Intro/Explain.modulate = Color(1, 1, 1, 0)
-  if js().playerPowerup > 1.1:
-    $Footsteps/emitter.color = Color(1, 0, 0, 1)
-    $Footsteps/emitter.scale_amount = 12
+
+  onPlayerNameChanged(JSGD.playerName)  
+  JSGD.connect("playerNameChanged", self, "onPlayerNameChanged")
+
+func onPlayerNameChanged(newName):
+  $UI/Name.text = newName
 
 func setScore(new):
   score = new
@@ -48,6 +50,7 @@ func triggerStart():
     return
   hasStarted = true
   
+  $Footsteps/Emitter.emitting = true
   $Intro/AnimationPlayer.play("Start")
   if shouldQuickStart:
     Events.emit_signal("quickStart")
@@ -83,7 +86,7 @@ func onDeath():
   $Footsteps/Emitter.emitting = false
   
 func onEnd():  
-  js().reportScore(int(score))
+  JSGD.reportScore(int(score))
   get_tree().reload_current_scene()
 
 func onTreasure():

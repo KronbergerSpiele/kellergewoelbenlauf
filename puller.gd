@@ -1,7 +1,5 @@
 extends StaticBody2D
 
-onready var powerUp = JSGDClientManager.client.playerPowerup
-
 export var baseSpeed: float = 65.0
 export var speedFactor: float = 2.0
 
@@ -18,7 +16,7 @@ func _process(delta):
   if !hasStarted:
     return
   
-  var progress = (baseSpeed + accumulatedSpeed) * delta * powerUp
+  var progress = (baseSpeed + accumulatedSpeed) * delta * JSGD.playerPowerUp
   position.x += progress
   Events.emit_signal("walkedDistance", progress)
   accumulatedSpeed += delta * speedFactor
