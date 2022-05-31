@@ -199,9 +199,9 @@ anims/Start = SubResource( 2 )
 
 [node name="Pieces" type="Node2D" parent="."]
 
-[node name="FirstStart" parent="Pieces" instance=ExtResource( 6 )]
-
 [node name="Start" parent="Pieces" instance=ExtResource( 3 )]
+
+[node name="FirstStart" parent="Pieces" instance=ExtResource( 6 )]
 
 [node name="Footsteps" type="Node2D" parent="."]
 position = Vector2( 25, 160 )
